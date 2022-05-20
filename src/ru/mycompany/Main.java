@@ -26,8 +26,8 @@ public class Main {
         System.out.println("Количество несовершеннолетних = " + minors);
 
         List<String> conscripts = persons.stream()
-                .filter(age -> age.getAge() > 18 )
-                .filter(age -> age.getAge() < 27 )
+                .filter(age -> age.getAge() >= 18 )
+                .filter(age -> age.getAge() <= 27 )
                 .filter(sex -> sex.getSex().equals(Sex.MAN))
                 .map(Person::getFamily)
                 .collect(Collectors.toList());
@@ -36,6 +36,7 @@ public class Main {
         List<String> workable = persons.stream()
                 .filter(age -> age.getAge() > 18 )
                 .filter(age -> age.getAge() < 65 )
+                .filter(age -> !(age.getAge() > 60 && age.getSex().equals(Sex.WOMAN)))
                 .filter(education -> education.getEducation().equals(Education.HIGHER))
                 .sorted(Comparator.comparing(Person::getFamily))//
                 .map(Person::getFamily)
